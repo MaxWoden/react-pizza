@@ -1,0 +1,30 @@
+@import '../../scss/_variables';
+
+.root {
+  align-items: center;
+  position: relative;
+  cursor: text;
+  padding: 10px 35px 10px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  img {
+    user-select: none;
+    height: 20px;
+    margin-right: 10px;
+  }
+  input {
+    transition: all 0.2s ease;
+    border: none;
+    width: 150px;
+  }
+}
+
+.clear {
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  margin: 0;
+  position: absolute;
+  right: 0px;
+  top: 12px;
+}
