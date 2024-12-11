@@ -20,7 +20,9 @@ const initialState: pizzaSliceState = {
 };
 
 export const fetchPizzas = createAsyncThunk('pizza/fetchPizzasStatus', async (query: string) => {
-  const { data } = await axios.get(`http://localhost:3001/items?${query}`);
+  const { data } = await axios.get('https://react-pizza-db.onrender.com/items');
+  console.log(data);
+
   return data as PizzaType[];
 });
 
