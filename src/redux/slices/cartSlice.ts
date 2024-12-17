@@ -25,6 +25,15 @@ const initialState: CartSliceState = {
   items: [],
 };
 
+const findItem = (items: CartItem[], action: PayloadAction<CartItem>) => {
+  return items.find(
+    (item) =>
+      item.title === action.payload.title &&
+      item.size === action.payload.size &&
+      item.type === action.payload.type,
+  );
+};
+
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -32,23 +41,13 @@ export const cartSlice = createSlice({
     addItem(state, action: PayloadAction<CartItem>) {
       state.totalPrice += action.payload.price;
       state.pizzasCount += 1;
-      const findItem = state.items.find(
-        (item) =>
-          item.title === action.payload.title &&
-          item.size === action.payload.size &&
-          item.type === action.payload.type,
-      );
-      findItem ? findItem.count++ : state.items.push(action.payload);
+      const item = findItem(state.items, action);
+      item ? item.count++ : state.items.push(action.payload);
     },
 
     minusItem(state, action: PayloadAction<CartItem>) {
-      const findItem = state.items.find(
-        (item) =>
-          item.title === action.payload.title &&
-          item.size === action.payload.size &&
-          item.type === action.payload.type,
-      );
-      findItem && findItem.count--;
+      const item = findItem(state.items, action);
+      item && item.count--;
       state.totalPrice -= action.payload.price;
       state.pizzasCount -= 1;
     },
@@ -61,14 +60,9 @@ export const cartSlice = createSlice({
     },
 
     removeItem(state, action: PayloadAction<CartItem>) {
-      const findItem = state.items.find(
-        (item) =>
-          item.title === action.payload.title &&
-          item.size === action.payload.size &&
-          item.type === action.payload.type,
-      );
-      state.items = state.items.filter((item) => {
-        return item !== findItem;
+      const item = findItem(state.items, action);
+      state.items = state.items.filter((obj) => {
+        return obj !== item;
       });
       state.totalPrice -= action.payload.count * action.payload.price;
       state.pizzasCount -= action.payload.count;
